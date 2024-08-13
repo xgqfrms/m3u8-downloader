@@ -93,19 +93,26 @@
 ### 核心代码
 【整合及自动下载】
 
-```
-    // 下载整合后的TS文件
-    downloadFile(fileDataList, fileName, fileType) {
-      this.tips = 'ts 碎片整合中，请留意浏览器下载'
-      const fileBlob = new Blob(fileDataList, { type: 'video/MP2T' }) // 创建一个Blob对象，并设置文件的 MIME 类型
-      const a = document.createElement('a')
-      a.download = fileName + '.' + fileType
-      a.href = URL.createObjectURL(fileBlob)
-      a.style.display = 'none'
-      document.body.appendChild(a)
-      a.click()
-      a.remove()
-    },
+
+```js
+// 自动下载整合后的TS文件
+autoDownloadFile(fileDataList, fileName, fileType) {
+  // title / tooltip
+  this.tips = `ts 碎片整合中，请留意浏览器下载`;
+  // 创建一个新的 Blob 对象，并设置文件的 MIME 类型为 `video/MP2T`
+  const fileBlob = new Blob(fileDataList, { type: 'video/MP2T' });
+  const aLink = document.createElement(`a`);
+  aLink.download = `${fileName}.${fileType}`;
+  // 生成一个 blob URL 链接
+  aLink.href = URL.createObjectURL(fileBlob);
+  // CSS 隐藏下载链接
+  aLink.style.display = `none`;
+  // 插入到 DOM 中
+  document.insertAdjacentElement(`beforeend`, aLink);
+  // document.body.appendChild(aLink);
+  aLink.click();
+  aLink.remove();
+},
 ```
 
 是的，涉及新知识点的部分只有上面一小段，其他的都是 JS 的基础应用。
